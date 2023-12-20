@@ -38,6 +38,7 @@ homepage = "https://github.com/django-money/django-money"
 
 [tool.poetry.dependencies]
 python = ">=3.7"
+babel = "^2.14.0"
 certifi = {version = ">=2021.5.30", optional = true}
 Django = ">=2.2"
 django-stubs = {version = "*", optional = true}

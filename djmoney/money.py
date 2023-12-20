@@ -1,6 +1,9 @@
 import warnings
 from types import MappingProxyType
 from typing import Optional, Union
+from babel.numbers import get_currency_precision
+
+from decimal import Decimal, ROUND_HALF_UP
 
 from django.conf import settings
 from django.db.models import F
@@ -8,7 +11,6 @@ from django.utils import translation
 from django.utils.deconstruct import deconstructible
 from django.utils.html import avoid_wrapping, conditional_escape
 from django.utils.safestring import mark_safe
-
 import moneyed.l10n
 from moneyed import Currency, Money as DefaultMoney
 
@@ -154,6 +156,25 @@ class Money(DefaultMoney):
     # Example: we overwrite __add__; __radd__ calls __add__ on DefaultMoney...
     __radd__ = __add__
     __rmul__ = __mul__
+    
+    def quantize(self, exp=None, rounding=None) -> 'Money':
+        """Return a copy of the object with its amount quantized.
+
+        If `exp` is given the resulting exponent will match that of `exp`.
+
+        Otherwise the resulting exponent will be set to the correct exponent
+        of the currency if it's known and to default (two decimal places)
+        otherwise.
+        """
+        if rounding is None:
+            rounding = ROUND_HALF_UP
+        if exp is None:
+            digits = get_currency_precision(self.currency)
+            exp = Decimal('0.1') ** digits
+        else:
+            exp = Decimal(exp)
+        return Money(
+            self.amount.quantize(exp, rounding=rounding), self.currency)
 
 
 def get_current_locale():

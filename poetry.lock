@@ -749,4 +749,4 @@ test = ["django-stubs", "mixer", "mypy", "pytest", "pytest-cov", "pytest-django"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.7"
-content-hash = "49753f783b3c778c7484dded8726ea65a617ad745321137079425c2d9fdf9ad5"
+content-hash = "d994edec55ab6ae1ff1f042425f525c7797fb19c98f5450406d5b456b66f7ee0"
