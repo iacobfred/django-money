@@ -1,6 +1,6 @@
 import warnings
 from types import MappingProxyType
-from typing import Optional
+from typing import Optional, Union
 
 from django.conf import settings
 from django.db.models import F
@@ -28,14 +28,15 @@ class Money(DefaultMoney):
 
     def __init__(
         self,
-        *args,
+        amount: "object",
+        currency: "Optional[Union[Currency, str]]" = None,
         format_options: "Optional[dict]" = None,
         decimal_places: "Optional[int]" = None,
         **kwargs,
     ):
         self.decimal_places = decimal_places if decimal_places is not None else DECIMAL_PLACES
         self.format_options = MappingProxyType(format_options) if format_options is not None else None
-        super().__init__(*args, **kwargs)
+        super().__init__(amount, currency, **kwargs)
 
     def _copy_attributes(self, source, target):
         """Copy attributes to the new `Money` instance.
