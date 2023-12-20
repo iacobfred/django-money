@@ -1,5 +1,6 @@
 import warnings
 from types import MappingProxyType
+from typing import Optional
 
 from django.conf import settings
 from django.db.models import F
@@ -23,10 +24,16 @@ class Money(DefaultMoney):
     Extends functionality of Money with Django-related features.
     """
 
-    use_l10n = None
+    use_l10n: "Optional[bool]" = None
 
-    def __init__(self, *args, format_options=None, **kwargs):
-        self.decimal_places = kwargs.pop("decimal_places", DECIMAL_PLACES)
+    def __init__(
+        self,
+        *args,
+        format_options: "Optional[dict]" = None,
+        decimal_places: "Optional[int]" = None,
+        **kwargs,
+    ):
+        self.decimal_places = decimal_places if decimal_places is not None else DECIMAL_PLACES
         self.format_options = MappingProxyType(format_options) if format_options is not None else None
         super().__init__(*args, **kwargs)
 

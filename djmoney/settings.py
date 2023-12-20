@@ -26,7 +26,7 @@ if CURRENCY_CHOICES is None:
         CURRENCY_CHOICES = [(c.code, c.name) for i, c in CURRENCIES.items() if c != XXX]
 
 CURRENCY_CHOICES.sort(key=operator.itemgetter(1, 0))
-DECIMAL_PLACES = getattr(settings, "CURRENCY_DECIMAL_PLACES", 2)
+DECIMAL_PLACES = int(getattr(settings, "CURRENCY_DECIMAL_PLACES", 2))
 
 OPEN_EXCHANGE_RATES_URL = getattr(settings, "OPEN_EXCHANGE_RATES_URL", "https://openexchangerates.org/api/latest.json")
 OPEN_EXCHANGE_RATES_APP_ID = getattr(settings, "OPEN_EXCHANGE_RATES_APP_ID", None)

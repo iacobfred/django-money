@@ -50,6 +50,7 @@ pytest-django = {version = "*", optional = true}
 pytest-pythonpath = {version = "*", optional = true}
 
 [tool.poetry.group.dev.dependencies]
+black = "<23.0.0"
 setuptools = ">=68.0.0,<69.0.0"
 
 [tool.poetry.extras]
